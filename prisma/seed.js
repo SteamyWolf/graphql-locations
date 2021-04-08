@@ -2,66 +2,55 @@ const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient()
 
-const userData = [
-  {
-    name: 'Alice',
-    email: 'alice@prisma.io',
-    posts: {
-      create: [
-        {
-          title: 'Join the Prisma Slack',
-          content: 'https://slack.prisma.io',
-          published: true,
-        },
-      ],
+const locations = [
+    {
+        name: "Luxembourg",
+        description: "A small european country that most people forget about",
+        coordinates: {
+            create: [
+                {
+                    longitude: "6.1248779296875",
+                    latitude: "49.616048816070425"
+                },
+                {
+                    longitude: "2.603759765625",
+                    latitude: "47.89424772020999"
+                }
+            ]
+        }
     },
-  },
-  {
-    name: 'Nilu',
-    email: 'nilu@prisma.io',
-    posts: {
-      create: [
-        {
-          title: 'Follow Prisma on Twitter',
-          content: 'https://www.twitter.com/prisma',
-          published: true,
-          viewCount: 42,
-        },
-      ],
-    },
-  },
-  {
-    name: 'Mahmoud',
-    email: 'mahmoud@prisma.io',
-    posts: {
-      create: [
-        {
-          title: 'Ask a question about Prisma on GitHub',
-          content: 'https://www.github.com/prisma/prisma/discussions',
-          published: true,
-          viewCount: 128,
-        },
-        {
-          title: 'Prisma on YouTube',
-          content: 'https://pris.ly/youtube',
-        },
-      ],
-    },
-  },
+    {
+        name: "Santa Clarita Valley",
+        description: "A valley located north of Los Angeles that has Magic Mountain",
+        coordinates: {
+            create: [
+                {
+                    longitude: "-1.40625",
+                    latitude: "52.82932091031373"
+                },
+                {
+                    longitude: "-7.646484374999999",
+                    latitude: "53.12040528310657"
+                }
+            ]
+        }
+    }
 ]
 
-async function main() {
-  console.log(`Start seeding ...`)
-  for (const u of userData) {
-    const user = await prisma.user.create({
-      data: u,
-    })
-    console.log(`Created user with id: ${user.id}`)
-  }
-  console.log(`Seeding finished.`)
-}
 
-main()
+  
+  async function main() {
+      console.log('Seeding...')
+      for (const loc of locations) {
+          const location = await prisma.location.create({
+              data: loc
+          })
+          console.log(`created location with id: ${location.id}`)
+      }
+      console.log('Seeding finished')
+  }
+
+  main()
   .catch((e) => {
     console.error(e)
     process.exit(1)
