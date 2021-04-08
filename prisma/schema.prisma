@@ -35,7 +35,7 @@ model Coordinate {
 }
 
 model Location {
-  name      String   @unique
+  name      String
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
