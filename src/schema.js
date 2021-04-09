@@ -200,6 +200,18 @@ const Mutation = objectType({
         })
       },
     })
+
+    t.field('deleteLocation', {
+      type: 'Location',
+      args: {
+        id: nonNull(intArg()),
+      },
+      resolve: (_, args, context) => {
+        return context.prisma.location.delete({
+          where: { id: args.id },
+        })
+      },
+    })
   },
 })
 
