@@ -42,6 +42,18 @@ const Query = objectType({
       },
     })
 
+    t.nullable.field('locationById', {
+      type: 'Location',
+      args: {
+        id: intArg(),
+      },
+      resolve: (_parent, args, context) => {
+        return context.prisma.location.findUnique({
+          where: { id: args.id || undefined },
+        })
+      },
+    })
+
     // t.nonNull.list.nonNull.field('feed', {
     //   type: 'Post',
     //   args: {

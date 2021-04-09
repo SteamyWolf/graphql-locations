@@ -28,12 +28,21 @@ type Location {
   updatedAt: DateTime!
 }
 
+input LocationCreateInput {
+  description: String
+  name: String!
+}
+
 type Mutation {
   createCoordinate(data: CoordinateCreateInput!, locationName: String!): Coordinate
+  createLocation(data: LocationCreateInput!): Location!
+  deleteCoordinate(id: Int!): Coordinate
+  deleteLocation(id: Int!): Location
 }
 
 type Query {
   allCoordinates: [Coordinate!]!
   allLocations: [Location!]!
   coordinateById(id: Int): Coordinate
+  locationById(id: Int): Location
 }
