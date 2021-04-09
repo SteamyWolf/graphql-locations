@@ -104,32 +104,24 @@ const Query = objectType({
 const Mutation = objectType({
   name: 'Mutation',
   definition(t) {
-    // t.nonNull.field('signupUser', {
-    //   type: 'User',
-    //   args: {
-    //     data: nonNull(
-    //       arg({
-    //         type: 'UserCreateInput',
-    //       }),
-    //     ),
-    //   },
-    //   resolve: (_, args, context) => {
-    //     const postData = args.data.posts
-    //       ? args.data.posts.map((post) => {
-    //           return { title: post.title, content: post.content || undefined }
-    //         })
-    //       : []
-    //     return context.prisma.user.create({
-    //       data: {
-    //         name: args.data.name,
-    //         email: args.data.email,
-    //         posts: {
-    //           create: postData,
-    //         },
-    //       },
-    //     })
-    //   },
-    // })
+    t.nonNull.field('createLocation', {
+      type: 'Location',
+      args: {
+        data: nonNull(
+          arg({
+            type: 'LocationCreateInput',
+          }),
+        ),
+      },
+      resolve: (_, args, context) => {
+        return context.prisma.location.create({
+          data: {
+            name: args.data.name,
+            description: args.data.description,
+          },
+        })
+      },
+    })
 
     t.field('createCoordinate', {
       type: 'Coordinate',
@@ -279,14 +271,13 @@ const CoordinateCreateInput = inputObjectType({
   },
 })
 
-// const UserCreateInput = inputObjectType({
-//   name: 'UserCreateInput',
-//   definition(t) {
-//     t.nonNull.string('email')
-//     t.string('name')
-//     t.list.nonNull.field('posts', { type: 'PostCreateInput' })
-//   },
-// })
+const LocationCreateInput = inputObjectType({
+  name: 'LocationCreateInput',
+  definition(t) {
+    t.nonNull.string('name')
+    t.string('description')
+  },
+})
 
 const schema = makeSchema({
   types: [
@@ -295,7 +286,7 @@ const schema = makeSchema({
     Location,
     Coordinate,
     // UserUniqueInput,
-    // UserCreateInput,
+    LocationCreateInput,
     CoordinateCreateInput,
     // SortOrder,
     // PostOrderByUpdatedAtInput,
