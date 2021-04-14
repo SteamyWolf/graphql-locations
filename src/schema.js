@@ -138,7 +138,7 @@ const Mutation = objectType({
         ),
       },
       resolve: (_, args, context) => {
-        return context.prisma.post.update({
+        return context.prisma.coordinate.update({
           where: { id: args.id || undefined },
           data: {
             longitude: args.data.longitude,
