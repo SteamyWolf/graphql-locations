@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "nodemon": "2.0.7",
-    "prisma": "^2.20.1"
+    "prisma": "^2.21.0"
   },
   "prettier": {
     "singleQuote": true,
