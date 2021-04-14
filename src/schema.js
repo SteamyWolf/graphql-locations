@@ -127,22 +127,26 @@ const Mutation = objectType({
     //   },
     // })
 
-    // t.field('incrementPostViewCount', {
-    //   type: 'Post',
-    //   args: {
-    //     id: nonNull(intArg()),
-    //   },
-    //   resolve: (_, args, context) => {
-    //     return context.prisma.post.update({
-    //       where: { id: args.id || undefined },
-    //       data: {
-    //         viewCount: {
-    //           increment: 1,
-    //         },
-    //       },
-    //     })
-    //   },
-    // })
+    t.field('updateCoordinate', {
+      type: 'Coordinate',
+      args: {
+        id: nonNull(intArg()),
+        data: nonNull(
+          arg({
+            type: 'CoordinateCreateInput'
+          }),
+        ),
+      },
+      resolve: (_, args, context) => {
+        return context.prisma.post.update({
+          where: { id: args.id || undefined },
+          data: {
+            longitude: args.data.longitude,
+            latitude: args.data.latitude
+          },
+        })
+      },
+    })
 
     t.field('deleteCoordinate', {
       type: 'Coordinate',
